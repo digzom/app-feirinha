@@ -1,16 +1,15 @@
-import pg from "pg"
-import { config } from "../../config/databaseConfig"
 import handlePoolResponse from "../../utils/handlePoolResponse"
-
-const pool = new pg.Pool(config)
+import { pool } from "../db"
 
 export const createCategoryTable = async () => {
   const categoryTable = `
-    CREATE TABLE IF NOT EXISTS
-    product (
-      id VARCHAR(40) PRIMARY KEY,
-      category_name VARCHAR(128) NOT NULL
-      )
+    DROP TABLE IF EXISTS category
+
+    CREATE TABLE category (
+      id VARCHAR(40),
+      category_name VARCHAR(128) NOT NULL,
+      PRIMARY KEY(id)
+    )
     `
 
   const queryResponse = await pool.query(categoryTable)

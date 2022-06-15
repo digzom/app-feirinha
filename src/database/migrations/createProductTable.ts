@@ -1,8 +1,5 @@
-import pg from "pg"
-import { config } from "../../config/databaseConfig"
+import { pool } from "../db"
 import handlePoolResponse from "../../utils/handlePoolResponse"
-
-const pool = new pg.Pool(config)
 
 export const createProductTable = async () => {
   const productTable = `

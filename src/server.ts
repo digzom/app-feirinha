@@ -1,14 +1,12 @@
 import express, { Response, Request } from "express"
 import dotenv from "dotenv"
-import pg from "pg"
-import { config } from "./config/databaseConfig"
 import bodyParser from "body-parser"
 import cors from "cors"
 import helmet from "helmet"
 import routes from "./routes"
+import { pool } from "./database/db"
 
 dotenv.config()
-const pool = new pg.Pool(config)
 const port = process.env.PORT
 const app = express()
 
@@ -25,6 +23,5 @@ pool.on("remove", () => {
   console.log("client removed")
   process.exit
 })
-
 
 app.listen(port, () => console.log(`Server is running`))

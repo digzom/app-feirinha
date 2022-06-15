@@ -1,9 +1,15 @@
+import dotenv from "dotenv"
+
+dotenv.config()
+
+const { PGUSER, PGHOST, PGPASSWORD, PGDATABASE, PGPORT } = process.env
+
 export const config = {
-  user: "dev",
-  host: '127.0.0.1',
-  database: "feirinha_app",
-  password: "strongone",
-  port: 5432,
+  user: PGUSER as string,
+  host: PGHOST as string,
+  database: PGDATABASE as string,
+  password: PGPASSWORD as string,
+  port: Number(PGPORT),
   max: 10,
   idleTimeoutMillis: 30000,
 }

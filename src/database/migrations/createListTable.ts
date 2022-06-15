@@ -1,16 +1,20 @@
-import pg from "pg"
-import { config } from "../../config/databaseConfig"
 import handlePoolResponse from "../../utils/handlePoolResponse"
-
-const pool = new pg.Pool(config)
+import { pool } from "../db"
 
 export const createListTable = async () => {
   const createListTable = `
-    CREATE TABLE IF NOT EXISTS
-    list (
-      id VARCHAR(40) PRIMARY KEY,
+    DROP TABLE IF EXISTS list;
+
+    CREATE TABLE list (
+      id VARCHAR(40), 
       user_id VARCHAR(40) NOT NULL,
-      list_name VARCHAR(128) NOT NULL
+      list_name VARCHAR(128) NOT NULL,
+      PRIMARY KEY(id),
+      CONSTRAINT fk_user
+        FOREIGN KEY(user_id)
+          REFERENCES user_app(id)
+          ON DELETE NO ACTION
+          ON UPDATE NO ACTION
     )
     `
 

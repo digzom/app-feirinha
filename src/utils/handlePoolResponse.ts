@@ -1,8 +1,5 @@
 import { QueryResult } from "pg"
-import { config } from "../config/databaseConfig"
-import pg from "pg"
-
-const pool = new pg.Pool(config)
+import { pool } from "../database/db"
 
 export default async (queryResponse: QueryResult) => {
   if (!queryResponse) {

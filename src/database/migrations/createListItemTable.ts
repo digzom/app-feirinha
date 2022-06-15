@@ -1,8 +1,7 @@
 import pg from "pg"
 import { config } from "../../config/databaseConfig"
 import handlePoolResponse from "../../utils/handlePoolResponse"
-
-const pool = new pg.Pool(config)
+import { pool } from "../db"
 
 export const createListItemTable = async () => {
   const listItemTable = `
