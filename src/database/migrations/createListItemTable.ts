@@ -1,12 +1,10 @@
-import pg from "pg"
-import { config } from "../../config/databaseConfig"
+import { QueryResult } from "pg"
 import handlePoolResponse from "../../utils/handlePoolResponse"
-import { pool } from "../db"
+import { query } from "../db"
 
 export const createListItemTable = async () => {
   const listItemTable = `
-    CREATE TABLE IF NOT EXISTS
-    list_item (
+    CREATE TABLE IF NOT EXISTS list_item (
       product_id VARCHAR(40) PRIMARY KEY,
       list_id VARCHAR(128) NOT NULL,
       item_qtd INT,
@@ -14,12 +12,7 @@ export const createListItemTable = async () => {
       )
     `
 
-  const queryResponse = await pool.query(listItemTable)
+  const queryResponse = await query(listItemTable)
 
-  await pool.end()
-
-  return handlePoolResponse(queryResponse)
+  return handlePoolResponse(queryResponse as unknown as QueryResult)
 }
-
-require('make-runnable')
-

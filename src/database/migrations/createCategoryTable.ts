@@ -1,22 +1,16 @@
 import handlePoolResponse from "../../utils/handlePoolResponse"
-import { pool } from "../db"
+import { query } from "../db"
 
 export const createCategoryTable = async () => {
   const categoryTable = `
-    DROP TABLE IF EXISTS category
-
-    CREATE TABLE category (
+    CREATE TABLE IF NOT EXISTS category (
       id VARCHAR(40),
       category_name VARCHAR(128) NOT NULL,
       PRIMARY KEY(id)
     )
     `
 
-  const queryResponse = await pool.query(categoryTable)
+  const queryResponse = await query(categoryTable)
 
-  await pool.end()
-
-  return handlePoolResponse(queryResponse)
+  return await handlePoolResponse(queryResponse)
 }
-
-require('make-runnable')

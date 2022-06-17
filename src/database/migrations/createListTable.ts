@@ -1,11 +1,9 @@
 import handlePoolResponse from "../../utils/handlePoolResponse"
-import { pool } from "../db"
+import { query } from "../db"
 
 export const createListTable = async () => {
   const createListTable = `
-    DROP TABLE IF EXISTS list;
-
-    CREATE TABLE list (
+    CREATE TABLE IF NOT EXISTS list (
       id VARCHAR(40), 
       user_id VARCHAR(40) NOT NULL,
       list_name VARCHAR(128) NOT NULL,
@@ -18,9 +16,7 @@ export const createListTable = async () => {
     )
     `
 
-  const queryResponse = await pool.query(createListTable)
-
-  await pool.end()
+  const queryResponse = await query(createListTable)
 
   return handlePoolResponse(queryResponse)
 }
