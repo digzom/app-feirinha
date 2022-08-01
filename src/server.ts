@@ -1,8 +1,9 @@
-import express, { Response, Request } from "express"
+import express from "express"
 import dotenv from "dotenv"
 import bodyParser from "body-parser"
 import cors from "cors"
 import helmet from "helmet"
+import "reflect-metadata"
 import routes from "./routes"
 import { pool } from "./database/db"
 
@@ -24,4 +25,4 @@ pool.on("remove", () => {
   process.exit
 })
 
-app.listen(port, () => console.log(`Server is running`))
+app.listen(port, () => console.log(`Server is running on port ${port}`))

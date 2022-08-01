@@ -4,9 +4,9 @@ import { query } from "../db"
 export const createCategoryTable = async () => {
   const categoryTable = `
     CREATE TABLE IF NOT EXISTS category (
-      id VARCHAR(40),
+      id uuid DEFAULT uuid_generate_v4(),
       category_name VARCHAR(128) NOT NULL,
-      PRIMARY KEY(id)
+      PRIMARY KEY (id)
     )
     `
 

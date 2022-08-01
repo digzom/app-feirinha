@@ -2,12 +2,12 @@ import handlePoolResponse from "../../utils/handlePoolResponse"
 import { query } from "../db"
 
 export const createListTable = async () => {
-  const createListTable = `
+  const createListTableFunc = `
     CREATE TABLE IF NOT EXISTS list (
-      id VARCHAR(40), 
-      user_id VARCHAR(40) NOT NULL,
+      id uuid DEFAULT uuid_generate_v4(), 
+      user_id uuid NOT NULL,
       list_name VARCHAR(128) NOT NULL,
-      PRIMARY KEY(id),
+      PRIMARY KEY (id),
       CONSTRAINT fk_user
         FOREIGN KEY(user_id)
           REFERENCES user_app(id)
@@ -16,9 +16,9 @@ export const createListTable = async () => {
     )
     `
 
-  const queryResponse = await query(createListTable)
+  const queryResponse = await query(createListTableFunc)
 
   return handlePoolResponse(queryResponse)
 }
 
-require('make-runnable')
+require("make-runnable")

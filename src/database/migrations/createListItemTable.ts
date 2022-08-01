@@ -5,10 +5,13 @@ import { query } from "../db"
 export const createListItemTable = async () => {
   const listItemTable = `
     CREATE TABLE IF NOT EXISTS list_item (
-      product_id VARCHAR(40) PRIMARY KEY,
-      list_id VARCHAR(128) NOT NULL,
+      product_id uuid NOT NULL,
+      list_id uuid NOT NULL,
       item_qtd INT,
-      brand VARCHAR(40)
+      brand VARCHAR(40),
+      CONSTRAINT fk_list
+        FOREIGN KEY (list_id)
+          REFERENCES list(id)
       )
     `
 

@@ -1,4 +1,3 @@
-import { pool } from "../db"
 import {
   createCategoryTable,
   createListItemTable,
@@ -12,8 +11,8 @@ export const createAllTables = async () => {
     return (
       await createUserTable(),
       await createCategoryTable(),
-      await createListItemTable(),
       await createListTable(),
+      await createListItemTable(),
       await createProductTable()
     )
   } catch (e) {
