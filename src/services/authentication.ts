@@ -1,22 +1,47 @@
-import { LoginType } from "../types/loginScreenTypes"
+import axios from "axios"
 
-export function signIn(payload: LoginType) {
-  if (
-    payload.username !== "diegomaradona@email.com" ||
-    payload.password !== "123"
-  ) {
-    return "Usuário e/ou senha incorretos"
-  }
+type RegisterUser = {
+  name: string
+  email: string
+  password: string
+}
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        token: "154",
-        user: {
-          name: "Diego",
-          email: "diegomaradona@email.com.br",
-        },
-      })
-    }, 2000)
-  })
+type LoginUser = {
+  name: string
+  email: string
+  password: string
+}
+
+const BASE_URL = process.env.BASE_URL
+
+export const authApi = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true,
+})
+
+authApi.defaults.headers.common["Content-Type"] = "application/json"
+
+authApi.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  async (error) => {
+    const originalRequest = error.config
+    const errMessage = error.response.data.message as string
+    if (errMessage.includes("not logged in") && !originalRequest._retry) {
+      originalRequest._retry = true
+      return authApi(originalRequest)
+    }
+    return Promise.reject(error)
+  },
+)
+
+export const signUpUserFn = async (user: RegisterUser) => {
+  const response = await authApi.post("/users", user)
+  return response.data
+}
+
+export const signInUser = async (user: LoginUser) => {
+  const response = await authApi.post("/users/signin", user)
+  return response.data
 }

@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import AppRoutes from "./app.routes"
 import AuthRoutes from "./auth.routes"
 
-const isLogged = true
+const isLogged = false
 
 const Routes: React.FC = () => (
   <NavigationContainer>

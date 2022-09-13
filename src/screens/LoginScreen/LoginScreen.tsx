@@ -16,7 +16,6 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { TouchableOpacity } from "react-native"
 import CustomInput from "../../components/CustomInput"
 import { loginSchema } from "../../schemas/loginSchema"
-import { signIn } from "../../services/authentication"
 import { LoginProps, LoginType } from "../../types/loginScreenTypes"
 
 const LoginScreen = () => {
@@ -28,7 +27,7 @@ const LoginScreen = () => {
   const { navigation } = useNavigation<LoginProps>()
 
   const onSubmit = async (data: LoginType) => {
-    console.log(await signIn(data))
+    console.log(data)
     navigation.navigate("Login")
   }
 
