@@ -3,6 +3,7 @@ import { IUser } from "../types/authenticationTypes"
 
 type State = {
   authUser: IUser | null
+  isSignedIn: boolean
 }
 
 type Action = {
@@ -14,6 +15,7 @@ type Dispatch = (action: Action) => void
 
 const initialState: State = {
   authUser: null,
+  isSignedIn: false,
 }
 
 type StateContextProviderProps = { children: React.ReactNode }
@@ -24,10 +26,18 @@ const StateContext = React.createContext<
 
 const stateReducer = (state: State, action: Action) => {
   switch (action.type) {
-    case "SET_USER": {
+    case "SIGN_IN": {
       return {
         ...state,
         authUser: action.payload,
+        isSignedIn: true,
+      }
+    }
+    case "SIGN_OUT": {
+      return {
+        ...state,
+        authUser: null,
+        isSignedIn: false,
       }
     }
     default: {

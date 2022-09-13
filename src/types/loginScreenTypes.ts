@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { AuthStackParamList } from "./routeTypes"
 
 export type LoginType = {
-  username: string
+  email: string
   password: string
 }
 

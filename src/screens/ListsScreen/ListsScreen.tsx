@@ -1,12 +1,6 @@
-import { useNavigation } from "@react-navigation/native"
+import { Box, Button } from "native-base"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { Button, Text } from "native-base"
-import { Box, FlatList } from "native-base"
-import Separator from "../../components/Separator"
-import axios from "axios"
-import { useAuthStore } from "../../zustand/useAuthStore"
 import { useStateContext } from "../../contexts/userContext"
-import { useMutation } from "@tanstack/react-query"
 
 const ListsScreen = () => {
   // if (isLoading)
@@ -22,6 +16,7 @@ const ListsScreen = () => {
   //       <Spinner color={"indigo.500"} size="lg" />
   //     </Center>
   //   )
+  const { dispatch } = useStateContext()
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -33,6 +28,9 @@ const ListsScreen = () => {
           // ItemSeparatorComponent={() => <Separator height={4} />}
           renderItem={({ item }) => <Box>{item.name}</Box>}
         /> */}
+        <Button onPress={() => dispatch({ type: "SIGN_OUT", payload: null })}>
+          logout
+        </Button>
       </Box>
     </SafeAreaView>
   )

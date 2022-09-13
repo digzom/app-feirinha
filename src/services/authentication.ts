@@ -1,4 +1,5 @@
 import axios from "axios"
+import { LoginType } from "../types/loginScreenTypes"
 
 type RegisterUser = {
   name: string
@@ -15,7 +16,7 @@ type LoginUser = {
 const BASE_URL = process.env.BASE_URL
 
 export const authApi = axios.create({
-  baseURL: BASE_URL,
+  baseURL: "https://backend-app-feirinha.gigalixirapp.com/api",
   withCredentials: true,
 })
 
@@ -26,13 +27,7 @@ authApi.interceptors.response.use(
     return response
   },
   async (error) => {
-    const originalRequest = error.config
-    const errMessage = error.response.data.message as string
-    if (errMessage.includes("not logged in") && !originalRequest._retry) {
-      originalRequest._retry = true
-      return authApi(originalRequest)
-    }
-    return Promise.reject(error)
+    console.log(error)
   },
 )
 
@@ -41,7 +36,8 @@ export const signUpUserFn = async (user: RegisterUser) => {
   return response.data
 }
 
-export const signInUser = async (user: LoginUser) => {
+export const signInUser = async (user: LoginType) => {
+  console.log(user)
   const response = await authApi.post("/users/signin", user)
   return response.data
 }
