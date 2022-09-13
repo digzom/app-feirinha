@@ -1,6 +1,14 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "strict": true,
+    "types": ["jest", "node"],
+    "typeRoots": ["./src/types", "./node_modules/@types"]
+  },
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts",
+    "src/infrastructure/setupTests.tsx"
+  ]
 }

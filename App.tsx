@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar"
+import { NativeBaseProvider } from "native-base"
+import React from "react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import Routes from "./src/routes"
+import {
+  useFonts,
+  Roboto_400Regular,
+  Roboto_700Bold,
+  Roboto_500Medium,
+} from "@expo-google-fonts/roboto"
+import AppLoading from "expo-app-loading"
+
+const client = new QueryClient()
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Iniciando a feirinha...</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_700Bold,
+    Roboto_500Medium,
+  })
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if (!fontsLoaded) return <AppLoading />
+
+  return (
+    <NativeBaseProvider>
+      <QueryClientProvider client={client}>
+        <StatusBar style="auto" />
+        <Routes />
+      </QueryClientProvider>
+    </NativeBaseProvider>
+  )
+}
