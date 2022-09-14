@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { useUserContext } from "../../contexts/userContext"
 
 const ListsScreen = () => {
+  const { dispatch } = useUserContext()
   // if (isLoading)
   //   return (
   //     <Center
@@ -16,7 +17,6 @@ const ListsScreen = () => {
   //       <Spinner color={"indigo.500"} size="lg" />
   //     </Center>
   //   )
-  const { dispatch } = useUserContext()
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
