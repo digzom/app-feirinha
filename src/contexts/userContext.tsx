@@ -8,7 +8,7 @@ type State = {
 
 type Action = {
   type: string
-  payload: IUser | null
+  payload: IUser | null | string
 }
 
 type Dispatch = (action: Action) => void
@@ -52,14 +52,14 @@ const StateContextProvider = ({ children }: StateContextProviderProps) => {
   return <StateContext.Provider value={value}>{children}</StateContext.Provider>
 }
 
-const useStateContext = () => {
+const useUserContext = () => {
   const context = React.useContext(StateContext)
 
   if (context) {
     return context
   }
 
-  throw new Error(`useStateContext must be used whitin a StateContextProvider`)
+  throw new Error(`useUserContext must be used whitin a StateContextProvider`)
 }
 
-export { StateContextProvider, useStateContext }
+export { StateContextProvider, useUserContext }

@@ -1,10 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native"
-import { useStateContext } from "../contexts/userContext"
+import { useUserContext } from "../contexts/userContext"
 import AppRoutes from "./app.routes"
 import AuthRoutes from "./auth.routes"
 
 const Routes: React.FC = () => {
-  const { state, dispatch } = useStateContext()
+  const { state, dispatch } = useUserContext()
   return (
     <NavigationContainer>
       {!state.isSignedIn ? <AuthRoutes /> : <AppRoutes />}

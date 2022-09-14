@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios from "axios"
 import { LoginType } from "../types/loginScreenTypes"
 
@@ -36,8 +37,16 @@ export const signUpUserFn = async (user: RegisterUser) => {
   return response.data
 }
 
-export const signInUser = async (user: LoginType) => {
+export const signInUser = async (
+  user: LoginType,
+): Promise<LoginResponseType> => {
   console.log(user)
-  const response = await authApi.post("/users/signin", user)
+  const response = await authApi.post(
+    "https://backend-app-feirinha.gigalixirapp.com/api/users/signin",
+    user,
+  )
+
+  await AsyncStorage.setItem("token", `Bearer ${response.data.token}`)
+
   return response.data
 }
