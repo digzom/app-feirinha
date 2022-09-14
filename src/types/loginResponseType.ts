@@ -1,0 +1,3 @@
+type LoginResponseType = {
+  token: string
+}

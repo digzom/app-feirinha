@@ -1,63 +1,8 @@
-import { useNavigation } from "@react-navigation/native"
+import { Box, Button } from "native-base"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { Text } from "native-base"
-import { Box, FlatList } from "native-base"
-import Separator from "../../components/Separator"
-
-const mockedList = [
-  {
-    name: "Compras Mensais",
-    id: "cc8791d6-2f66-43db-817c-b6159177ee28",
-    products: [
-      {
-        category: ["Comida"],
-        description: "Delícia yammy",
-        id: 2,
-        name: "Feijão 3",
-      },
-    ],
-  },
-  {
-    name: "Compras Mensais",
-    id: "cc8791d6-2f66-43db-817c-b6159177ee28",
-    products: [
-      {
-        category: ["Comida"],
-        description: "Delícia yammy",
-        id: 2,
-        name: "Feijão 3",
-      },
-    ],
-  },
-  {
-    name: "Compras Mensais",
-    id: "cc8791d6-2f66-43db-817c-b6159177ee28",
-    products: [
-      {
-        category: ["Comida"],
-        description: "Delícia yammy",
-        id: 2,
-        name: "Feijão 3",
-      },
-    ],
-  },
-  {
-    name: "Compras Mensais",
-    id: "cc8791d6-2f66-43db-817c-b6159177ee28",
-    products: [
-      {
-        category: ["Comida"],
-        description: "Delícia yammy",
-        id: 2,
-        name: "Feijão 3",
-      },
-    ],
-  },
-]
+import { useUserContext } from "../../contexts/userContext"
 
 const ListsScreen = () => {
-  // const { pacients, isLoading } = useGetPacients()
-
   // if (isLoading)
   //   return (
   //     <Center
@@ -71,17 +16,21 @@ const ListsScreen = () => {
   //       <Spinner color={"indigo.500"} size="lg" />
   //     </Center>
   //   )
+  const { dispatch } = useUserContext()
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Box flexGrow={1}>
-        <FlatList
+        {/* <FlatList
           testID="lists-list"
           data={mockedList}
           style={{ flex: 1 }}
           // ItemSeparatorComponent={() => <Separator height={4} />}
           renderItem={({ item }) => <Box>{item.name}</Box>}
-        />
+        /> */}
+        <Button onPress={() => dispatch({ type: "SIGN_OUT", payload: null })}>
+          logout
+        </Button>
       </Box>
     </SafeAreaView>
   )

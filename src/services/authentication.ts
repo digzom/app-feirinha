@@ -1,22 +1,52 @@
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import axios from "axios"
 import { LoginType } from "../types/loginScreenTypes"
 
-export function signIn(payload: LoginType) {
-  if (
-    payload.username !== "diegomaradona@email.com" ||
-    payload.password !== "123"
-  ) {
-    return "Usuário e/ou senha incorretos"
-  }
+type RegisterUser = {
+  name: string
+  email: string
+  password: string
+}
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        token: "154",
-        user: {
-          name: "Diego",
-          email: "diegomaradona@email.com.br",
-        },
-      })
-    }, 2000)
-  })
+type LoginUser = {
+  name: string
+  email: string
+  password: string
+}
+
+const BASE_URL = process.env.BASE_URL
+
+export const authApi = axios.create({
+  baseURL: "https://backend-app-feirinha.gigalixirapp.com/api",
+  withCredentials: true,
+})
+
+authApi.defaults.headers.common["Content-Type"] = "application/json"
+
+authApi.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  async (error) => {
+    console.log(error)
+  },
+)
+
+export const signUpUserFn = async (user: RegisterUser) => {
+  const response = await authApi.post("/users", user)
+  return response.data
+}
+
+export const signInUser = async (
+  user: LoginType,
+): Promise<LoginResponseType> => {
+  console.log(user)
+  const response = await authApi.post(
+    "https://backend-app-feirinha.gigalixirapp.com/api/users/signin",
+    user,
+  )
+
+  await AsyncStorage.setItem("token", `Bearer ${response.data.token}`)
+
+  return response.data
 }

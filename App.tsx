@@ -11,6 +11,8 @@ import {
 } from "@expo-google-fonts/roboto"
 import AppLoading from "expo-app-loading"
 
+import { StateContextProvider } from "./src/contexts/userContext"
+
 const client = new QueryClient()
 
 export default function App() {
@@ -26,7 +28,9 @@ export default function App() {
     <NativeBaseProvider>
       <QueryClientProvider client={client}>
         <StatusBar style="auto" />
-        <Routes />
+        <StateContextProvider>
+          <Routes />
+        </StateContextProvider>
       </QueryClientProvider>
     </NativeBaseProvider>
   )

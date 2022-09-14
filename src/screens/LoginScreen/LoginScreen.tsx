@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useNavigation } from "@react-navigation/native"
 import { MaterialIcons } from "expo-vector-icons"
 import {
   Box,
@@ -15,9 +14,10 @@ import React from "react"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { TouchableOpacity } from "react-native"
 import CustomInput from "../../components/CustomInput"
+import { useUserContext } from "../../contexts/userContext"
 import { loginSchema } from "../../schemas/loginSchema"
-import { signIn } from "../../services/authentication"
-import { LoginProps, LoginType } from "../../types/loginScreenTypes"
+import { signInUser } from "../../services/authentication"
+import { LoginType } from "../../types/loginScreenTypes"
 
 const LoginScreen = () => {
   const {
@@ -25,26 +25,26 @@ const LoginScreen = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(loginSchema) })
-  const { navigation } = useNavigation<LoginProps>()
+  const { dispatch } = useUserContext()
 
-  const onSubmit = async (data: LoginType) => {
-    console.log(await signIn(data))
-    navigation.navigate("Login")
+  const onSubmit = async (loginInput: LoginType) => {
+    const user = await signInUser(loginInput)
+    dispatch({ type: "SIGN_IN", payload: user.token })
   }
 
   return (
     <Center h="full">
       <Heading color={"info.400"} position={"absolute"} top={"1/6"}>
-        UniTI
+        Feirinha
       </Heading>
       <VStack w={"full"} p={5}>
         <Box>
           <CustomInput
-            name="username"
+            name="email"
             errors={errors}
             control={control}
             label="Usuário"
-            key={"username"}
+            key={"email"}
             required
             inputProps={{ variant: "underlined" }}
             inputLeftElement={
