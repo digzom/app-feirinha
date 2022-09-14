@@ -10,6 +10,7 @@ import {
   Roboto_500Medium,
 } from "@expo-google-fonts/roboto"
 import AppLoading from "expo-app-loading"
+
 import { StateContextProvider } from "./src/contexts/userContext"
 
 const client = new QueryClient()

@@ -1,6 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useNavigation } from "@react-navigation/native"
-import axios from "axios"
 import { MaterialIcons } from "expo-vector-icons"
 import {
   Box,
@@ -14,13 +12,12 @@ import {
 } from "native-base"
 import React from "react"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { TouchableOpacity } from "react-native"
 import CustomInput from "../../components/CustomInput"
-import { loginSchema } from "../../schemas/loginSchema"
-import { LoginProps, LoginType } from "../../types/loginScreenTypes"
 import { useUserContext } from "../../contexts/userContext"
+import { loginSchema } from "../../schemas/loginSchema"
 import { signInUser } from "../../services/authentication"
+import { LoginType } from "../../types/loginScreenTypes"
 
 const LoginScreen = () => {
   const {
@@ -28,13 +25,11 @@ const LoginScreen = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(loginSchema) })
-  const { state, dispatch } = useUserContext()
-  const { navigation } = useNavigation<LoginProps>()
+  const { dispatch } = useUserContext()
 
   const onSubmit = async (loginInput: LoginType) => {
     const user = await signInUser(loginInput)
     dispatch({ type: "SIGN_IN", payload: user.token })
-    navigation.navigate("Login")
   }
 
   return (
